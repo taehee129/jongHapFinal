@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Skydash Admin</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href= "{{ url_for('static', filename='vendors/feather/feather.css') }}">
+  <link rel="stylesheet" href=  "{{ url_for('static', filename='vendors/ti-icons/css/themify-icons.css') }}">
+  <link rel="stylesheet" href=  "{{ url_for('static', filename='vendors/css/vendor.bundle.base.css') }}">
+  <link rel="stylesheet" href=  "{{ url_for('static', filename='vendors/mdi/css/materialdesignicons.min.css') }}">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <!--<link rel="stylesheet" href=  "{{ url_for('static', filename='vendors/select2/select2.min.css') }}">-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='vendors/select2-bootstrap-theme/select2-bootstrap.min.css') }}">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href=  "{{ url_for('static', filename='css/vertical-layout-light/style.css') }}">
+  <!-- endinject -->
+  <link rel="shortcut icon" href=  "{{ url_for('static', filename='images/favicon.png') }}" />
+  <style>
+    .page_wrap {
+      text-align:center;
+      font-size:0;
+    }
+    .page_nation {
+      display:inline-block;
+    }
+    .page_nation .none {
+      display:none;
+    }
+    .page_nation a {
+      display:block;
+      margin:0 3px;
+      float:left;
+      border:1px solid #e6e6e6;
+      width:28px;
+      height:28px;
+      line-height:28px;
+      text-align:center;
+      background-color:#fff;
+      font-size:13px;
+      color:#999999;
+      text-decoration:none;
+    }
+    .page_nation .arrow {
+      border:1px solid #ccc;
+    }
+    .page_nation .pprev {
+      background:#f8f8f8 url(  "{{ url_for('static', filename='images/paging/page_pprev.png') }}") no-repeat center center;
+      margin-left:0;
+    }
+    .page_nation .prev {
+      background:#f8f8f8 url(  "{{ url_for('static', filename='images/paging/page_prev.png') }}")  no-repeat center center;
+      margin-right:7px;
+    }
+    .page_nation .next {
+      background:#f8f8f8 url(  "{{ url_for('static', filename='images/paging/page_next.png') }}") no-repeat center center;
+      margin-left:7px;
+    }
+    .page_nation .nnext {
+      background:#f8f8f8 url(  "{{ url_for('static', filename='images/paging/page_nnext.png') }}") no-repeat center center;
+      margin-right:0;
+    }
+    .page_nation a.active {
+      background-color:#42454c;
+      color:#fff;
+      border:1px solid #42454c;
+    }
+
+    .mdi-account {
+      display: inline-block;
+      color: #4B49AC;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:../../partials/_navbar.html -->
+    {% include "navbar.html"%}
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:../../partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><i class="ti-settings"></i></div>
+        <div id="theme-settings" class="settings-panel">
+          <i class="settings-close ti-close"></i>
+          <p class="settings-heading">SIDEBAR SKINS</p>
+          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border mr-3"></div>Light</div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark</div>
+          <p class="settings-heading mt-2">HEADER SKINS</p>
+          <div class="color-tiles mx-0 px-4">
+            <div class="tiles success"></div>
+            <div class="tiles warning"></div>
+            <div class="tiles danger"></div>
+            <div class="tiles info"></div>
+            <div class="tiles dark"></div>
+            <div class="tiles default"></div>
+          </div>
+        </div>
+      </div>
+      <div id="right-sidebar" class="settings-panel">
+        <i class="settings-close ti-close"></i>
+        <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="todo-tab" data-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="chats-tab" data-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="setting-content">
+          <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
+            <div class="add-items d-flex px-3 mb-0">
+              <form class="form w-100">
+                <div class="form-group d-flex">
+                  <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
+                  <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="list-wrapper px-3">
+              <ul class="d-flex flex-column-reverse todo-list">
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Team review meeting at 3.00 PM
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Prepare for presentation
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox">
+                      Resolve all the low priority tickets due today
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Schedule meeting for next week
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+                <li class="completed">
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input class="checkbox" type="checkbox" checked>
+                      Project review
+                    </label>
+                  </div>
+                  <i class="remove ti-close"></i>
+                </li>
+              </ul>
+            </div>
+            <h4 class="px-3 text-muted mt-5 font-weight-light mb-0">Events</h4>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary mr-2"></i>
+                <span>Feb 11 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Creating component page build a js</p>
+              <p class="text-gray mb-0">The total number of sessions</p>
+            </div>
+            <div class="events pt-4 px-3">
+              <div class="wrapper d-flex mb-2">
+                <i class="ti-control-record text-primary mr-2"></i>
+                <span>Feb 7 2018</span>
+              </div>
+              <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
+              <p class="text-gray mb-0 ">Call Sarah Graves</p>
+            </div>
+          </div>
+          <!-- To do section tab ends -->
+          <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
+            <div class="d-flex align-items-center justify-content-between border-bottom">
+              <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
+              <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+            </div>
+            <ul class="chat-list">
+              <li class="list active">
+                <div class="profile"><img src="../../images/faces/face1.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Thomas Douglas</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">19 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="../../images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <div class="wrapper d-flex">
+                    <p>Catherine</p>
+                  </div>
+                  <p>Away</p>
+                </div>
+                <div class="badge badge-success badge-pill my-auto mx-2">4</div>
+                <small class="text-muted my-auto">23 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="../../images/faces/face3.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Daniel Russell</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">14 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="../../images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
+                <div class="info">
+                  <p>James Richardson</p>
+                  <p>Away</p>
+                </div>
+                <small class="text-muted my-auto">2 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="../../images/faces/face5.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Madeline Kennedy</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">5 min</small>
+              </li>
+              <li class="list">
+                <div class="profile"><img src="../../images/faces/face6.jpg" alt="image"><span class="online"></span></div>
+                <div class="info">
+                  <p>Sarah Graves</p>
+                  <p>Available</p>
+                </div>
+                <small class="text-muted my-auto">47 min</small>
+              </li>
+            </ul>
+          </div>
+          <!-- chat tab ends -->
+        </div>
+      </div>
+      <!-- partial -->
+      <!-- partial:../../partials/_sidebar.html -->
+      {% include "sidebar.html"%}
+
+      <!-- partial -->
+      <div class="main-panel">        
+        <div class="content-wrapper">
+          <div class="row">
+          <!-- 자유게시판 시작 -->
+          <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <button type="button" class="btn btn-outline-primary btn-fw" style="float:right" onclick="location.href='/posting'">글 작성</button>
+                <h4 class="card-title">자유게시판</h4>
+                <p class="card-description">
+                 언어 관련 의견을 자유롭게 나눌 수 있는 게시판입니다.
+                </p>
+                <div class="justify-content-end d-flex">
+                  <div class="dropdown flex-md-grow-1 flex-xl-grow-0">
+                    <button type="button" class="btn btn-outline-primary btn-fw selectBoardList">정렬 적용</button>
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="search" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span id="searchCate">제목</span> :  <input type="text" id='searchText'class="form-control" value="" style="
+                        width: 200px;
+                        height: 15px;
+                        display : inline;
+                        padding: 0.875rem 0.5rem;
+                        margin-left: 2px;
+                    "> </button>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="search">
+                        <a class="dropdown-item search-category"  data-value="title">제목</a>
+                        <a class="dropdown-item search-category"  data-value="text">내용</a>
+                      </div>
+                    </div>
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-light bg-white dropdown-toggle " type="button" id="dropdownMenuDate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        추천수 <input type="text" class="form-control" id='recommendCnt'value="1" style=" 
+                        width: 50px;
+                        height: 10px;
+                        display : inline;
+                        padding: 0.875rem 0.5rem;
+                        margin-left: 2px;
+                    "> ↑
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate">
+                        <a class="dropdown-item sorting" href="#" data-value="50">50 ↑</a>
+                        <a class="dropdown-item sorting" href="#" data-value="100">100 ↑</a>
+                        <a class="dropdown-item sorting" href="#" data-value="200">200 ↑</a>
+                      </div>
+                    </div>
+
+                    <div class="btn-group">
+                      <button class="btn btn-sm btn-light bg-white dropdown-toggle" type="button" id="dropdownMenuDate2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        조회수 <input type="text" id='viewCnt'class="form-control" value="2" style="
+                        width: 50px;
+                        height: 10px;
+                        display : inline;
+                        padding: 0.875rem 0.5rem;
+                        margin-left: 2px;
+                    "> ↑
+                      </button>
+                      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuDate2">
+                        <a class="dropdown-item sorting" href="#" data-value="50">50 ↑</a>
+                        <a class="dropdown-item sorting" href="#" data-value="100">100 ↑</a>
+                        <a class="dropdown-item sorting" href="#" data-value="200">200 ↑</a>
+                      </div>
+                    </div>
+
+                  </div>
+                 </div>
+                <div class="table-responsive" style="overflow : hidden">
+                  <table class="table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>
+                          언어
+                        </th>
+                        <th>
+                          제목
+                        </th>
+                        <th>
+                          내용
+                        </th>
+                        <th>
+                        게시일
+                        </th>
+                        <th>
+                         조회수 
+                        </th>
+                        <th>
+                            추천수
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for post in boardList %}
+                      <tr>
+                        <td>
+                          {{ post.lang }} 
+                        </td>
+                        <td>  
+                            {{ post.title }}
+                        </td>
+                        <td>
+                          <p>{{ post.text}}</p>
+                        </td>
+                        <td>  
+                           {{ post.insertDate}}
+                        </td>
+                        <td>  
+                            {{ post.viewCnt}}
+                        </td>
+                        <td>  
+                            {{ post.recommendCnt}}
+                        </td>
+                        <td class="no" style="display : none">{{ post.no}}</td>
+                      </tr>
+                      {% endfor %}
+                      <!-- <tr>
+                        <td>
+                          한국어
+                        </td>
+                        <td>  
+                          퀴즈 문제를 늘려주세요
+                        </td>
+                        <td>
+                          <p>퀴즈 문제가 너무 적습니다.</p>
+                        </td>
+                        <td>  
+                           2023/06/23
+                        </td>
+                        <td>  
+                            25
+                        </td>
+                        <td>  
+                            5
+                        </td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                                  <!-- paging 시작 -->
+                <div class="page_wrap">
+                  <div class="page_nation">
+                      <a class="arrow pprev" href="#"></a>
+                      <a class="arrow prev" href="#"></a>
+                      <a class="pagenation pageActive selectBoardList">1</a>
+                      <a class="pagenation selectBoardList">2</a>
+                      <a class="pagenation selectBoardList">3</a>
+                      <a href="#">4</a>
+                      <a href="#">5</a>
+                      <a href="#">6</a>
+                      <a href="#">7</a>
+                      <a href="#">8</a>
+                      <a href="#">9</a>
+                      <a href="#">10</a>
+                      <a class="arrow next" href="#"></a>
+                      <a class="arrow nnext" href="#"></a>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 페이징-->
+            <!-- 자유게시판 끝-->            
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021.  Premium <a href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="{{ url_for('static', filename='vendors/js/vendor.bundle.base.js') }}"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="{{ url_for('static', filename='vendors/typeahead.js/typeahead.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendors/select2/select2.min.js') }}"></script>
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src=  "{{ url_for('static', filename='js/off-canvas.js') }}"></script>
+  <script src= "{{ url_for('static', filename='js/hoverable-collapse.js') }}"></script>
+  <script src= "{{ url_for('static', filename='js/template.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/todolist.js') }}"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="{{ url_for('static', filename='js/file-upload.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/typeahead.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/select2.js') }}"></script>
+
+  <!-- jqery 05.27 taehee-->
+  <script src="{{ url_for('static', filename='js/jquery-3.7.0.js') }}"></script>
+  <script>
+    $('tr').on('click', function() {
+      no = $(this).children('.no').text()
+      location.href = '/boardDetail?no='+no; 
+    })
+
+    $('.sorting').on('click', function(){
+      $(this).closest('.btn-group').find('input').val($(this).data('value'))
+
+    })
+    $('.search-category').on('click', function(){
+      $(this).closest('.btn-group').find('#searchCate').text($(this).text())
+      $(this).addClass('selected')
+
+    })
+
+    $('.selectBoardList').on('click', function(){
+      var page = $('.pageActive').text()
+      if ($(this).hasClass('pagenation')){
+        page = $(this).text()
+
+      }
+      var viewCnt = $('#viewCnt').val()
+      var recommendCnt =$('#recommendCnt').val()
+      var serachCate = $('#searchCate').text()
+      var searchText =$('#searchText').val()
+      url = 'page='+page + '&viewCnt='+viewCnt+'&recommendCnt='+recommendCnt+'&searchCate=' +serachCate + '&searchText=' + searchText
+      
+      location.href = '/board?'+url
+
+    })
+
+  </script>
+</body>
+
+</html>
